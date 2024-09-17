@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "616913199124",
+    "project_id": "flutter-step-tracking",
+    "storage_bucket": "flutter-step-tracking.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:616913199124:android:cb97dc6f534f1357168701",
+        "android_client_info": {
+          "package_name": "com.example.flutter_step_tracking"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBH5sbhEHrMZ4ssmoYUOK71Q2uSjpYBR9s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
