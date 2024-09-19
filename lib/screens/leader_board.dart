@@ -1,7 +1,8 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_step_tracking/sevices/fitness_api_service.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_step_tracking/sevices/firebase_auth_service.dart';
 import 'package:flutter_step_tracking/sevices/firestore_service.dart';
@@ -61,15 +62,51 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class StepView extends StatelessWidget {
-  HealthRepository controller = HealthRepository();
+class StepView extends StatefulWidget {
+  @override
+  _StepView createState() => _StepView();
+}
+
+class _StepView extends State<StepView> with WidgetsBindingObserver {
+  final StepTracker _stepTracker = StepTracker();
+  late Timer _timer;
+  int step = 999999;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.paused) {
+      _timer.cancel();
+    } else if (state == AppLifecycleState.resumed) {
+      _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        _stepTracker.getFootSteps().then((value) {
+          setState(() {
+            step = value;
+          });
+        });
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
         padding: const EdgeInsets.all(8),
-        child: Text("${controller.step.value}",
+        child: Text("$step",
             style: const TextStyle(
-                fontSize: 80,
+                fontSize: 52,
                 color: Colors.blue,
                 fontWeight: FontWeight.bold)));
   }
