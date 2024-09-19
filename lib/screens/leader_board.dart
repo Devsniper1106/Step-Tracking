@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_step_tracking/sevices/fitness_api_service.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_step_tracking/sevices/firebase_auth_service.dart';
 import 'package:flutter_step_tracking/sevices/firestore_service.dart';
@@ -26,11 +28,7 @@ class HomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text('23',
-                  style: const TextStyle(
-                      fontSize: 80,
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold)),
+              StepView(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -60,6 +58,20 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
     ));
+  }
+}
+
+class StepView extends StatelessWidget {
+  HealthRepository controller = HealthRepository();
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        padding: const EdgeInsets.all(8),
+        child: Text("${controller.step.value}",
+            style: const TextStyle(
+                fontSize: 80,
+                color: Colors.blue,
+                fontWeight: FontWeight.bold)));
   }
 }
 
